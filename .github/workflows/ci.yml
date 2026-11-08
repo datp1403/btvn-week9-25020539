@@ -30,3 +30,12 @@ jobs:
           name: bank-system-jar-${{ matrix.os }}
           path: target/*.jar
           if-no-files-found: error
+
+      - name: Upload JaCoCo Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report-${{ matrix.os }}
+          path: target/site/jacoco/
+          if-no-files-found: warn
+

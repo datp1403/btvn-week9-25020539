@@ -143,5 +143,84 @@ class BankSystemTest {
     assertEquals("result.txt", path.getFileName().toString());
   }
 
+  @Test
+  void savingsDepositRecordsTransaction() {
+    SavingsAccount account = new SavingsAccount(5555L, 5200.0);
+
+    account.deposit(300.0);
+
+    assertEquals(5500.0, account.getBalance());
+    assertEquals(1, account.getTransactionList().size());
+    assertEquals(
+            Transaction.TYPE_DEPOSIT_SAVINGS,
+            account.getTransactionList().get(0).getType());
+  }
+
+  @Test
+  void customerManagementHandlesDuplicates() {
+    Customer customer = new Customer();
+    customer.setIdNumber(123456789L);
+    customer.setFullName("Nguyen Van A");
+
+    assertEquals(123456789L, customer.getIdNumber());
+    assertEquals("Nguyen Van A", customer.getFullName());
+    assertTrue(customer.getCustomerInfo().contains("Nguyen Van A"));
+
+    Account account = new CheckingAccount(1111L, 1000.0);
+    customer.addAccount(account);
+    customer.addAccount(account);
+    customer.addAccount(null);
+
+    assertEquals(1, customer.getAccountList().size());
+
+    customer.removeAccount(account);
+    assertTrue(customer.getAccountList().isEmpty());
+
+    customer.setAccountList(null);
+    assertTrue(customer.getAccountList().isEmpty());
+  }
+
+  @Test
+  void bankHandlesInvalidCustomerInput() {
+    Bank bank = new Bank();
+
+    bank.readCustomerList(null);
+    assertTrue(bank.getCustomerList().isEmpty());
+
+    String input = "111111 CHECKING 500\n"
+            + "Nguyen Van A 123456789\n"
+            + "222222 UNKNOWN 500\n"
+            + "333333 CHECKING 800\n"
+            + "333333 CHECKING 800\n"
+            + "444444 SAVINGS abc\n";
+
+    bank.readCustomerList(
+            new ByteArrayInputStream(
+                    input.getBytes(StandardCharsets.UTF_8)));
+
+    assertEquals(1, bank.getCustomerList().size());
+    assertEquals(
+            1, bank.getCustomerList().get(0).getAccountList().size());
+
+    bank.setCustomerList(null);
+    assertTrue(bank.getCustomerList().isEmpty());
+  }
+
+  @Test
+  void accountMetadataCanBeUpdated() {
+    CheckingAccount account = new CheckingAccount(1000L, 500.0);
+
+    account.setAccountNumber(2000L);
+    assertEquals(2000L, account.getAccountNumber());
+
+    account.setTransactionList(null);
+    account.addTransaction(null);
+    assertTrue(account.getTransactionList().isEmpty());
+
+    assertTrue(account.equals(account));
+    assertFalse(account.equals("not an account"));
+  }
+
+
 
 }
