@@ -18,7 +18,7 @@ class BankSystemTest {
     account.deposit(500.0);
     account.withdraw(200.0);
 
-    assertEquals(2400.0, account.getBalance());
+    assertEquals(2300.0, account.getBalance());
     assertEquals(2, account.getTransactionList().size());
     assertEquals(Transaction.TYPE_DEPOSIT_CHECKING, account.getTransactionList().get(0).getType());
     assertEquals(Transaction.TYPE_WITHDRAW_CHECKING, account.getTransactionList().get(1).getType());
