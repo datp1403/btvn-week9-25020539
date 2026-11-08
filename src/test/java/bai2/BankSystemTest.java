@@ -135,11 +135,13 @@ class BankSystemTest {
     assertEquals("Lịch sử giao dịch của tài khoản 4444:\n", account.getTransactionHistory());
   }
 
+
   @Test
-  void testWindowsPath() {
-    Path path = Path.of("reports\\result.txt");
+  void testCrossPlatformPath() {
+    Path path = Path.of("reports", "result.txt");
 
     assertEquals("result.txt", path.getFileName().toString());
   }
+
 
 }
