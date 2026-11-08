@@ -26,8 +26,13 @@ public final class BankSystemDemo {
     savings.withdraw(500.0);
     savings.withdraw(1200.0);
 
-    System.out.println(checking.getTransactionHistory());
-    System.out.println(savings.getTransactionHistory());
+
+    LOGGER.info("Checking account: transactions={}, balance={}",
+            checking.getTransactionList().size(), checking.getBalance());
+
+    LOGGER.info("Savings account: transactions={}, balance={}",
+            savings.getTransactionList().size(), savings.getBalance());
+
 
     String customers = "Nguyen Van A 123456789\n"
         + "111111 CHECKING 1500\n"
@@ -35,7 +40,8 @@ public final class BankSystemDemo {
     Bank bank = new Bank();
     bank.readCustomerList(new ByteArrayInputStream(
         customers.getBytes(StandardCharsets.UTF_8)));
-    System.out.println(bank.getCustomersInfoByIdOrder());
+    LOGGER.info("Imported customers: {}",
+            bank.getCustomerList().size());
 
     LOGGER.info("BankSystem demonstration finished");
   }
