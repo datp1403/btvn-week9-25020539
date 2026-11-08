@@ -3,9 +3,9 @@ package bai2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
@@ -134,4 +134,12 @@ class BankSystemTest {
 
     assertEquals("Lịch sử giao dịch của tài khoản 4444:\n", account.getTransactionHistory());
   }
+
+  @Test
+  void testWindowsPath() {
+    Path path = Path.of("reports\\result.txt");
+
+    assertEquals("result.txt", path.getFileName().toString());
+  }
+
 }
