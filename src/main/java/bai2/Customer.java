@@ -7,6 +7,7 @@ import java.util.List;
 public class Customer {
   private long idNumber;
   private String fullName;
+  private int badname = 0;
   private List<Account> accountList;
 
   /** Constructs an empty customer. */
